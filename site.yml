@@ -45,14 +45,21 @@
         enabled: true
       when: ansible_distribution == "CentOS"
 
-    - name: copy default html file for site
-      tags: apache, apache2, httpd
+- name: Ensure /var/www/html directory exists
+  hosts: all
+  become: true
+  tasks:
+    - name: Create /var/www/html directory
+      file:
+        path: /var/www/html
+        state: directory
+        mode: '0755'
+
+    - name: Copy default HTML file for site
       copy:
-        src: files/default_site.html
+        src: /path/to/your/default/index.html
         dest: /var/www/html/index.html
-        owner: root
-        group: root
-        mode: 0644
+
 
 
 - hosts: server_CENT
