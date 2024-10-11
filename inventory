@@ -1,0 +1,9 @@
+[servers]
+mn1 ansible_host=192.168.56.142 ansible_become_pass="dikoalam1991"
+mn3 ansible_host=192.168.56.146 ansible_become_pass="dikoalam1991"
+
+[server_CENT]
+mn2 ansible_host=192.168.56.145 ansible_become_pass="qfmgayao"
+
+[fileserver]
+mn4 ansible_host=192.168.56.147 ansible_become_pass="dikoalam1991"
