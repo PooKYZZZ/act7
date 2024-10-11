@@ -1,36 +1,31 @@
 - hosts: all
   become: true
   pre_tasks:
-    - name: update repository index (CentOS)
+    - name: install updates (CentOS)
       tags: always
       dnf:
+        update_only: yes
         update_cache: yes
-      changed_when: false
       when: ansible_distribution == "CentOS"
 
     - name: install updates (Ubuntu)
       tags: always
       apt:
+        upgrade: dist
         update_cache: yes
-      changed_when: false
       when: ansible_distribution == "Ubuntu"
-
-- hosts: all
-  become: true
-  roles:
-    - base
 
 - hosts: fileserver
   become: true
   roles:
-    - workstations
+    - fileserver
 
-- hosts: servers
+- hosts: servers, server_CENT
   become: true
   roles:
-    - servers
+    - webserver
 
 - hosts: server_CENT
   become: true
   roles:
-    - server_CENT
+    - dbserver
