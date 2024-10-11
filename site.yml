@@ -59,6 +59,8 @@
       copy:
         src: /path/to/your/default/index.html
         dest: /var/www/html/index.html
+        remote_src: yes
+
 
 
 
