@@ -1,6 +1,43 @@
 - hosts: all
   become: true
   pre_tasks:
+    - name: update repository index (CentOS)
+      tags: always
+      dnf:
+        update_cache: yes
+      changed_when: false
+      when: ansible_distribution == "CentOS"
+
+    - name: install updates (Ubuntu)
+      tags: always
+      apt:
+        update_cache: yes
+      changed_when: false
+      when: ansible_distribution == "Ubuntu"
+
+- hosts: all
+  become: true
+  roles:
+    - base
+
+- hosts: fileserver
+  become: true
+  roles:
+    - workstations
+
+- hosts: servers
+  become: true
+  roles:
+    - servers
+
+- hosts: server_CENT
+  become: true
+  roles:
+    - server_CENT
+
+- hosts: all
+  become: true
+  pre_tasks:
     - name: install updates (CentOS)
       tags: always
       dnf:
@@ -34,7 +71,6 @@
 - hosts: servers, server_CENT
   become: true
   tasks:
-
     - name: install apache and php for Ubuntu servers
       tags: apache, apache2, ubuntu
       apt:
@@ -69,8 +105,7 @@
         owner: root
         group: root
         mode: 0644
-
-
+        
 - hosts: server_CENT
   become: true
   tasks:
