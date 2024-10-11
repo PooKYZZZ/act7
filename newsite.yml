@@ -23,9 +23,9 @@
 - hosts: servers, server_CENT
   become: true
   roles:
-    - webserver
+    - servers
 
 - hosts: server_CENT
   become: true
   roles:
-    - dbserver
+    - server_CENT
